@@ -12,42 +12,74 @@ from flask import Flask, render_template, request, send_file
 from TTS.config import load_config
 from TTS.utils.synthesizer import Synthesizer
 
+app = Flask(__name__)
+
+app.config["model_path"] = os.environ.get("model_path")
+app.config["config_path"] = os.environ.get("config_path")
+app.config["speakers_file_path"] = os.environ.get("speakers_file_path", None)
+app.config["vocoder_path"] = os.environ.get("vocoder_path")
+app.config["vocoder_config_path"] = os.environ.get("vocoder_config_path")
+app.config["port"] = os.environ.get("port", 5002)
+app.config["use_cuda"] = os.environ.get("use_cuda", False)
+app.config["debug"] = os.environ.get("debug", False)
+app.config["show_details"] = os.environ.get("show_details", False)
 
 # parse the args
-args = {}
-
+args = app.config.__dict__
 
 
 # update in-use models to the specified released models.
-model_path = None
-config_path = None
-speakers_file_path = None
-vocoder_path = None
-vocoder_config_path = None
-port = 5002
-use_cuda = False
-debug = False
-show_details = False
+# model_path = None
+# config_path = None
+# speakers_file_path = None
+# vocoder_path = None
+# vocoder_config_path = None
+# port = 5002
+# use_cuda = False
+# debug = False
+# show_details = False
 
+model_path = os.environ.get("model_path")
+config_path = os.environ.get("config_path")
+# speakers_file_path = os.environ.get("speakers_file_path", None)
+vocoder_path = os.environ.get("vocoder_path")
+vocoder_config_path = os.environ.get("vocoder_config_path")
+port = os.environ.get("port", 5002)
+use_cuda = False
+debug = os.environ.get("debug", False)
+show_details = os.environ.get("show_details", False)
+
+args = {
+"model_path": os.environ.get("model_path"),
+"config_path": os.environ.get("config_path"),
+# "speakers_file_path": os.environ.get("speakers_file_path", None),
+"vocoder_path": os.environ.get("vocoder_path"),
+"vocoder_config_path": os.environ.get("vocoder_config_path"),
+"port": os.environ.get("port", 5002),
+"use_cuda": False,
+"debug": os.environ.get("debug", False),
+"show_details": os.environ.get("show_details", False)
+}
 
 # load models
 synthesizer = Synthesizer(
     tts_checkpoint=model_path,
     tts_config_path=config_path,
-    tts_speakers_file=speakers_file_path,
-    tts_languages_file=None,
+    # tts_speakers_file=speakers_file_path,
     vocoder_checkpoint=vocoder_path,
     vocoder_config=vocoder_config_path,
     encoder_checkpoint="",
     encoder_config="",
-    use_cuda=args.use_cuda,
+    use_cuda=use_cuda,
 )
+
+print(args)
 
 use_multi_speaker = hasattr(synthesizer.tts_model, "num_speakers") and synthesizer.tts_model.num_speakers > 1
 speaker_manager = getattr(synthesizer.tts_model, "speaker_manager", None)
 # TODO: set this from SpeakerManager
 use_gst = synthesizer.tts_config.get("use_gst", False)
-app = Flask(__name__)
+
 
 
 def style_wav_uri_to_dict(style_wav: str) -> Union[str, dict]:
@@ -73,7 +105,7 @@ def style_wav_uri_to_dict(style_wav: str) -> Union[str, dict]:
 def index():
     return render_template(
         "index.html",
-        show_details=args.show_details,
+        show_details=show_details,
         use_multi_speaker=use_multi_speaker,
         speaker_ids=speaker_manager.speaker_ids if speaker_manager is not None else None,
         use_gst=use_gst,
@@ -82,18 +114,18 @@ def index():
 
 @app.route("/details")
 def details():
-    model_config = load_config(args.config_path)
-    if args.vocoder_config_path is not None and os.path.isfile(args.vocoder_config_path):
-        vocoder_config = load_config(args.vocoder_config_path)
+    model_config = load_config(config_path)
+    if vocoder_config_path is not None and os.path.isfile(vocoder_config_path):
+        vocoder_config = load_config(vocoder_config_path)
     else:
         vocoder_config = None
 
     return render_template(
         "details.html",
-        show_details=args.show_details,
+        show_details=True,
         model_config=model_config,
         vocoder_config=vocoder_config,
-        args=args.__dict__,
+        args=args,
     )
 
 
@@ -111,8 +143,9 @@ def tts():
     return send_file(out, mimetype="audio/wav")
 
 
+
 def main():
-    app.run(debug=args.debug, host="0.0.0.0", port=args.port)
+    app.run(debug=debug, host="0.0.0.0", port=port)
 
 
 if __name__ == "__main__":
