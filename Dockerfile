@@ -1,8 +1,6 @@
-FROM rajivsadho/taco2-trini-f:1
+FROM rajivsadho/pytorch-tts
 
 WORKDIR /app
-
-RUN pip install TTS
 
 COPY . .
 
