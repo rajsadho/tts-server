@@ -14,18 +14,18 @@ from TTS.utils.synthesizer import Synthesizer
 
 app = Flask(__name__)
 
-app.config["model_path"] = os.environ.get("model_path")
-app.config["config_path"] = os.environ.get("config_path")
-app.config["speakers_file_path"] = os.environ.get("speakers_file_path", None)
-app.config["vocoder_path"] = os.environ.get("vocoder_path")
-app.config["vocoder_config_path"] = os.environ.get("vocoder_config_path")
-app.config["port"] = os.environ.get("port", 5002)
-app.config["use_cuda"] = os.environ.get("use_cuda", False)
-app.config["debug"] = os.environ.get("debug", False)
-app.config["show_details"] = os.environ.get("show_details", False)
+# app.config["model_path"] = os.environ.get("model_path")
+# app.config["config_path"] = os.environ.get("config_path")
+# app.config["speakers_file_path"] = os.environ.get("speakers_file_path", None)
+# app.config["vocoder_path"] = os.environ.get("vocoder_path")
+# app.config["vocoder_config_path"] = os.environ.get("vocoder_config_path")
+# app.config["port"] = os.environ.get("port", 5002)
+# app.config["use_cuda"] = os.environ.get("use_cuda", False)
+# app.config["debug"] = os.environ.get("debug", False)
+# app.config["show_details"] = os.environ.get("show_details", False)
 
 # parse the args
-args = app.config.__dict__
+# args = app.config.__dict__
 
 
 # update in-use models to the specified released models.
@@ -39,26 +39,36 @@ args = app.config.__dict__
 # debug = False
 # show_details = False
 
-model_path = os.environ.get("model_path")
-config_path = os.environ.get("config_path")
+# model_path=/app/model_data/models/female.pth
+# config_path=/app/model_data/models/config.json
+# speakers_file_path=None
+# vocoder_path=/app/model_data/vocoders/model_file.pth.tar
+# vocoder_config_path=/app/model_data/vocoders/config.json
+# port=5002
+# use_cuda=False
+# debug=True
+# show_details=True
+
+model_path = os.environ.get("model_path", "/app/model_data/models/female.pth")
+config_path = os.environ.get("config_path", "/app/model_data/models/config.json")
 # speakers_file_path = os.environ.get("speakers_file_path", None)
-vocoder_path = os.environ.get("vocoder_path")
-vocoder_config_path = os.environ.get("vocoder_config_path")
+vocoder_path = os.environ.get("vocoder_path", "/app/model_data/vocoders/model_file.pth.tar")
+vocoder_config_path = os.environ.get("vocoder_config_path", "/app/model_data/vocoders/config.json")
 port = os.environ.get("port", 5002)
 use_cuda = False
 debug = os.environ.get("debug", False)
 show_details = os.environ.get("show_details", False)
 
 args = {
-"model_path": os.environ.get("model_path"),
-"config_path": os.environ.get("config_path"),
+"model_path": model_path,
+"config_path": config_path,
 # "speakers_file_path": os.environ.get("speakers_file_path", None),
-"vocoder_path": os.environ.get("vocoder_path"),
-"vocoder_config_path": os.environ.get("vocoder_config_path"),
-"port": os.environ.get("port", 5002),
+"vocoder_path": vocoder_path,
+"vocoder_config_path": vocoder_config_path,
+"port": port,
 "use_cuda": False,
-"debug": os.environ.get("debug", False),
-"show_details": os.environ.get("show_details", False)
+"debug": debug,
+"show_details": show_details
 }
 
 # load models
