@@ -39,25 +39,25 @@ app = Flask(__name__)
 # debug = False
 # show_details = False
 
-# model_path=/app/model_data/models/female.pth
-# config_path=/app/model_data/models/config.json
-# speakers_file_path=None
-# vocoder_path=/app/model_data/vocoders/model_file.pth.tar
-# vocoder_config_path=/app/model_data/vocoders/config.json
-# port=5002
-# use_cuda=False
-# debug=True
-# show_details=True
+model_path="/app/model_data/models/female.pth"
+config_path="/app/model_data/models/config.json"
+speakers_file_path=None
+vocoder_path="/app/model_data/vocoders/model_file.pth.tar"
+vocoder_config_path="/app/model_data/vocoders/config.json"
+port=5002
+use_cuda=False
+debug=True
+show_details=True
 
-model_path = os.environ.get("model_path", "/app/model_data/models/female.pth")
-config_path = os.environ.get("config_path", "/app/model_data/models/config.json")
-# speakers_file_path = os.environ.get("speakers_file_path", None)
-vocoder_path = os.environ.get("vocoder_path", "/app/model_data/vocoders/model_file.pth.tar")
-vocoder_config_path = os.environ.get("vocoder_config_path", "/app/model_data/vocoders/config.json")
-port = os.environ.get("port", 5002)
-use_cuda = False
-debug = os.environ.get("debug", False)
-show_details = os.environ.get("show_details", False)
+# model_path = os.environ.get("model_path", "/app/model_data/models/female.pth")
+# config_path = os.environ.get("config_path", "/app/model_data/models/config.json")
+# # speakers_file_path = os.environ.get("speakers_file_path", None)
+# vocoder_path = os.environ.get("vocoder_path", "/app/model_data/vocoders/model_file.pth.tar")
+# vocoder_config_path = os.environ.get("vocoder_config_path", "/app/model_data/vocoders/config.json")
+# port = os.environ.get("port", 5002)
+# use_cuda = False
+# debug = os.environ.get("debug", False)
+# show_details = os.environ.get("show_details", False)
 
 args = {
 "model_path": model_path,
