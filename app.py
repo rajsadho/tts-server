@@ -13,7 +13,6 @@ app = Flask(__name__)
 # Hardcoded config. Host does not play well with env.
 model_path = "/app/model_data/models/female.pth"
 config_path = "/app/model_data/models/config.json"
-speakers_file_path = None
 vocoder_path = "/app/model_data/vocoders/model_file.pth.tar"
 vocoder_config_path = "/app/model_data/vocoders/config.json"
 port = 5002
