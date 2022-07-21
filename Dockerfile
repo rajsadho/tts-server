@@ -1,4 +1,4 @@
-FROM rajivsadho/pytorch-tts
+FROM rajivsadho/male-tts
 
 WORKDIR /app
 
