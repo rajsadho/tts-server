@@ -11,7 +11,7 @@ from TTS.utils.synthesizer import Synthesizer
 app = Flask(__name__)
 
 # Hardcoded config. Host does not play well with env.
-model_path = "/app/model_data/models/female.pth"
+model_path = "/app/model_data/models/male.pth"
 config_path = "/app/model_data/models/config.json"
 vocoder_path = "/app/model_data/vocoders/model_file.pth.tar"
 vocoder_config_path = "/app/model_data/vocoders/config.json"
